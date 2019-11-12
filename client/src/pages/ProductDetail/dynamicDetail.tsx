@@ -1,12 +1,11 @@
 import React from "react";
-import CarForm from "~pages/ProductRegistration/CategoryForm/carForm";
+import CarDetail from "~pages/ProductDetail/CategoryDetail/carDetail";
 
-
-function DynamicForm(props:any) {
+function DynamicDetail(props:any) {
     switch (props.category) {
         case 0:
             return (
-                <CarForm />
+               <CarDetail/>
             );
         case 1:
             return(<div></div>);
@@ -22,4 +21,4 @@ function DynamicForm(props:any) {
     }
 }
 
-export default DynamicForm;
+export default DynamicDetail;

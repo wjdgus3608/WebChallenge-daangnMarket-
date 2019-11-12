@@ -1,6 +1,6 @@
 import React from "react";
 
-function Carform() {
+function CarForm() {
     return (
         <div>
         <div className="form-group form-car-model-year">
@@ -37,4 +37,4 @@ function Carform() {
     );
 }
 
-export default Carform;
+export default CarForm;
