@@ -3,10 +3,13 @@ import CarForm from "~pages/ProductRegistration/CategoryForm/carForm";
 
 
 function DynamicForm(props:any) {
+    const dataChange=(data:any)=>{
+        props.dataChange(data)
+    }
     switch (props.category) {
         case 0:
             return (
-                <CarForm />
+                <CarForm dataChange={dataChange}/>
             );
         case 1:
             return(<div></div>);

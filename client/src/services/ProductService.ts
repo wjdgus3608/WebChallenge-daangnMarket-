@@ -9,6 +9,7 @@ export type ProductRegistrationDto = {
   title: string;
   description: string;
   price: number;
+  filterData: any;
 }
 
 export type ProductDto = {
@@ -21,6 +22,7 @@ export type ProductDto = {
   price: number;
   createdAt: string;
   updatedAt: string;
+  filterData: any;
 }
 
 const API_HOST = process.env.API_HOST || 'http://localhost:5000/api';
@@ -41,6 +43,7 @@ class ProductService {
     formData.append('title', body.title);
     formData.append('description', body.description);
     formData.append('price', String(body.price));
+    formData.append('filterdata', String(body.filterData.carYear)+'/'+String(body.filterData.carMile)+'/'+String(body.filterData.isSmoke));
 
     return axios.post<ProductRegistrationDto, ApiResponse<ProductDto>>(`${API_HOST}/products`, formData, {
       headers: {'Content-Type': 'multipart/form-data' }
@@ -53,6 +56,18 @@ class ProductService {
 
   async getById(id: string): Promise<ApiResponse<ProductDto>> {
     return axios.get(`${API_HOST}/products/${id}`);
+  }
+
+  async getByCategory(category: string): Promise<ApiResponse<ProductDto[]>> {
+    return axios.get(`${API_HOST}/products/category/${category}`);
+  }
+
+  async getByCategoryWithFilter(category: string, filterData:any): Promise<ApiResponse<ProductDto[]>> {
+    return axios.get(`${API_HOST}/products/category/${category}/filtered`,{params:{
+        carYear:filterData.carYear,
+        carMile:filterData.carMile,
+        radioChecked:filterData.radioChecked
+      }});
   }
 
 }

@@ -23,7 +23,7 @@ function Product(props: ProductProps) {
       />
       <div className="card-body">
         <h5 className="title">{title}</h5>
-        <h6 className="price">{price}</h6>
+        <h6 className="price">{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h6>
         <h6 className="category">{getCategoryName(category)}</h6>
       </div>
       <div className="card-footer text-muted">

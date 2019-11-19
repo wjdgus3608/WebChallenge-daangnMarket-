@@ -20,7 +20,7 @@ class ProductList extends Component<InjectedProps & RouteComponentProps> {
     const { products } = this.props[STORES.PRODUCTS_STORE];
     return (
       <>
-        <FixedTopBar />
+        <FixedTopBar category={-1}/>
         <div className="container container-main-index">
           <h5 className="container-headline">중고 거래 제품</h5>
 

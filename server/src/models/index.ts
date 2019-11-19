@@ -73,7 +73,11 @@ export function init(): Sequelize {
     description: {
       type: new DataTypes.STRING(100),
       allowNull: true,
-    }
+    },
+    filterdata: {
+      type : new DataTypes.STRING(100),
+      allowNull: true,
+    },
   }, {
     sequelize,
     tableName: 'products',

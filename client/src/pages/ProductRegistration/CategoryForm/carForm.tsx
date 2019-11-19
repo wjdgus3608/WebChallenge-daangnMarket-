@@ -1,10 +1,22 @@
-import React from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 
-function CarForm() {
+function CarForm(props:any) {
+    const [carYear,setCarYear]=useState<number>(0);
+    const [carMile,setCarMile]=useState<number>(0);
+    const [isSmoke,setIsSmoke]=useState<boolean>();
+    const sendData=()=>{
+        let data={
+            carYear:carYear,
+            carMile:carMile,
+            isSmoke:isSmoke
+        }
+        props.dataChange(data);
+    }
+    useEffect(sendData,[carYear,carMile,isSmoke]);
     return (
         <div>
         <div className="form-group form-car-model-year">
-            <select id="carModelYear" className="form-control" required={true}>
+            <select id="carModelYear" className="form-control" required={true} onChange={v=>(setCarYear(Number(v.target.value)))}>
                 <option value="">차량 연식을 선택해주세요</option>
                 <option value="2020">2020년</option>
                 <option value="2019">2019년</option>
@@ -20,16 +32,16 @@ function CarForm() {
             </select>
         </div>
         <div className="form-group form-car-mileage">
-        <input type="number" className="form-control" id="carMileage" placeholder="주행거리를 입력해주세요.(km)" required={true}/>
+        <input type="number" className="form-control" id="carMileage" placeholder="주행거리를 입력해주세요.(km)" required={true} onChange={v=>(setCarMile(Number(v.target.value)))}/>
         </div>
         <div className="form-group form-car-smoking">
         <label>차량 판매자 흡연 여부</label>
     <div className="form-check form-check-inline form-check-smoking">
-        <input className="form-check-input" type="radio" name="smokingOptions" id="inlineSmoker" value="true" required={true}/>
+        <input className="form-check-input" type="radio" name="smokingOptions" id="inlineSmoker" value="true" required={true} onClick={()=>(setIsSmoke(true))}/>
         <label className="form-check-label smoker" htmlFor="inlineSmoker">예, 흡연자 입니다.</label>
 </div>
 <div className="form-check form-check-inline form-check-nonsmoking">
-<input className="form-check-input" type="radio" name="smokingOptions" id="inlineNonSmoker" value="false" />
+<input className="form-check-input" type="radio" name="smokingOptions" id="inlineNonSmoker" value="false" onClick={()=>setIsSmoke(false)}/>
 <label className="form-check-label non-smoker" htmlFor="inlineNonSmoker">아니오, 비 흡연자 입니다.</label>
 </div>
 </div>

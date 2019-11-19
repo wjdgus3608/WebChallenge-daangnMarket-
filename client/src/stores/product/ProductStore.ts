@@ -1,6 +1,8 @@
 import { action, observable } from 'mobx';
 import ProductService, { ProductDto, ProductRegistrationDto } from '~services/ProductService';
 import autobind from 'autobind-decorator';
+import {ApiResponse} from "~services/types";
+import axios from "axios";
 
 @autobind
 class ProductsStore {
@@ -13,6 +15,19 @@ class ProductsStore {
   @action
   async getAllProducts() {
     const response = await this.productService.getAll();
+    console.log(response.data.data);
+    this.setProducts(response.data.data);
+  }
+
+  @action
+  async getCategoryProducts(category: string) {
+    const response = await this.productService.getByCategory(category);
+    console.log(response.data.data);
+    this.setProducts(response.data.data);
+  }
+  @action
+  async getByCategoryWithFilter(category: string, filterData:any) {
+    const response = await this.productService.getByCategoryWithFilter(category,filterData);
     console.log(response.data.data);
     this.setProducts(response.data.data);
   }

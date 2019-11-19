@@ -23,7 +23,45 @@ router.get('/:id', upload.single('image'), async (req, res) => {
   }
 });
 
+router.get('/category/:category', async (req, res) => {
+  const mycategory = req.params.category;
+  try {
+    const products = await Product.findAll({where: {category: Number(mycategory)}});
+
+    return res.json({ data: products });
+  } catch (e) {
+    return res.status(500).json({ msg: e.message });
+  }
+});
+
+router.get('/category/:category/filtered', async (req, res) => {
+  const mycategory = req.params.category;
+  const filterdata = req.query;
+  try {
+    const products = await Product.findAll({where: {category: Number(mycategory)}});
+
+    return res.json({ data: products });
+  } catch (e) {
+    return res.status(500).json({ msg: e.message });
+  }
+});
+
 router.post('', upload.single('image'), async (req, res) => {
+  const image = req.file;
+  const product = req.body;
+
+  try {
+    const insertedProduct = await Product.create({
+      ...product,
+      image: `/${image.path}`,
+    });
+    return res.json({ data: insertedProduct, msg: '상품등록에 성공하였습니다.' });
+  } catch (e) {
+    return res.status(500).json({ msg: e.message });
+  }
+});
+
+router.post('/category/:category', upload.single('image'), async (req, res) => {
   const image = req.file;
   const product = req.body;
 

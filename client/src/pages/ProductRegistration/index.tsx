@@ -9,6 +9,7 @@ import DynamicForm from "~pages/ProductRegistration/dynamicForm";
 
 interface InjectedProps {
   [STORES.PRODUCTS_STORE]: ProductsStore,
+  params:any
 }
 
 const ProductRegistration = inject(STORES.PRODUCTS_STORE)(observer((props: InjectedProps) => {
@@ -18,6 +19,7 @@ const ProductRegistration = inject(STORES.PRODUCTS_STORE)(observer((props: Injec
   const [category, setCategory] = useState();
   const [fileName, setFileName] = useState('파일선택');
   const [image, setImage] = useState();
+  const [filterData, setfilterData] = useState();
   const history=useHistory();
   const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files != null && event.target.files.length > 0) {
@@ -30,15 +32,21 @@ const ProductRegistration = inject(STORES.PRODUCTS_STORE)(observer((props: Injec
     setCategory(event.target.value ? Number(event.target.value) : undefined);
   };
 
+  const dataChange=(data:any)=>{
+    setfilterData(data);
+  }
+
   const onRegister = async (event: FormEvent) => {
     event.preventDefault();
     event.stopPropagation();
+    console.log("onregister",filterData);
     await props.productsStore.registrationProduct({
       title,
       description,
       category,
       image,
-      price
+      price,
+      filterData
     });
     history.goBack();
   };
@@ -82,7 +90,7 @@ const ProductRegistration = inject(STORES.PRODUCTS_STORE)(observer((props: Injec
                       onChange={v => setDescription(v.target.value)}
                       placeholder="제품 설명을 작성해주세요." required={true}/>
           </div>
-          <DynamicForm category={category} onCategoryChanged={onCategoryChange}/>
+          <DynamicForm category={category} onCategoryChanged={onCategoryChange} dataChange={dataChange}/>
           <button className="btn btn-primary btn-submit">상품 등록하기</button>
         </form>
       </div>
