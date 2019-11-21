@@ -14,9 +14,11 @@ interface InjectedProps  {
 }
 
 class CarProductList extends Component<InjectedProps & RouteComponentProps> {
-  category=0
+  category=-1
+  page_title="Noting"
   componentWillMount(): void {
-
+    this.category=this.props.location.state.category;
+    this.page_title=this.props.location.state.title;
     this.props[STORES.PRODUCTS_STORE].getCategoryProducts(this.category.toString());
   }
 
@@ -25,7 +27,7 @@ class CarProductList extends Component<InjectedProps & RouteComponentProps> {
     filterBtnState:false,
     carYear:0,
     carMile:0,
-    radioChecked:''
+    radioChecked:undefined
   }
   handleDialog=()=>{
     this.setState({
@@ -44,17 +46,21 @@ class CarProductList extends Component<InjectedProps & RouteComponentProps> {
       this.updateProducts();
     });
   };
-  handleInit=()=>{
-    this.setState({filterBtnState:false},()=>{
-      this.updateProducts();
-    });
+  handleInit=(carYear:any,carMile:any,radioChecked:string)=>{
+    this.setState({carYear: carYear});
+    this.setState({carMile: carMile});
+    this.setState({radioChecked: radioChecked});
+    this.setState({filterBtnState:false});
   };
 
   updateProducts=()=>{
-    console.log("updated!!");
-    this.props[STORES.PRODUCTS_STORE].getByCategoryWithFilter(this.category.toString(),{carYear:this.state.carYear,
-      carMile:this.state.carMile,
-      radioChecked:this.state.radioChecked});
+    if(this.category===0) {
+      this.props[STORES.PRODUCTS_STORE].getByCategoryWithFilter(this.category.toString(), {
+        carYear: this.state.carYear,
+        carMile: this.state.carMile,
+        radioChecked: this.state.radioChecked
+      });
+    }
   }
 
   render() {
@@ -63,7 +69,7 @@ class CarProductList extends Component<InjectedProps & RouteComponentProps> {
       <div>
         <FixedTopBar category={this.category} filterClick={this.handleDialog} filterBtnState={this.state.filterBtnState}/>
         <div className="container container-main-index" style={{overflow:"hidden"}}>
-          <h5 className="container-headline">중고 차량 목록</h5>
+          <h5 className="container-headline">{this.page_title}</h5>
           <ul className="list-products row">
             {products.map(v => (
                 <li
@@ -76,7 +82,7 @@ class CarProductList extends Component<InjectedProps & RouteComponentProps> {
                 </li>
             ))}
           </ul>
-          <FilterDialog open={this.state.isDialogOpen} close={this.handleDialog} handleSubmit={this.handleSubmit} handleInit={this.handleInit}/>
+          <FilterDialog open={this.state.isDialogOpen} close={this.handleDialog} category={this.category} handleSubmit={this.handleSubmit} handleInit={this.handleInit}/>
         </div>
         <Footer/>
         {this.state.isDialogOpen?ReactDOM.createPortal(<div className="modal-backdrop fade show"></div>,document.body)

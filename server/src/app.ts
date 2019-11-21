@@ -52,10 +52,63 @@ async function runServer() {
     Product.create({
       userId: user.id,
       category: 0,
-      title: 'TEST Product',
+      title: '2019년/1km/비흡연자',
       price: 1000,
-      image: '/uploads/sample-product.jpeg'
-    })
+      image: '/uploads/sample-product.jpeg',
+      filterdata: '2019/1/true',
+    });
+    Product.create({
+      userId: user.id,
+      category: 1,
+      title: '가구 상품',
+      price: 1000,
+      image: '/uploads/sample-product.jpeg',
+    });
+    Product.create({
+      userId: user.id,
+      category: 2,
+      title: '유아동 상품',
+      price: 1000,
+      image: '/uploads/sample-product.jpeg',
+    });
+    Product.create({
+      userId: user.id,
+      category: 3,
+      title: '생활 상품',
+      price: 1000,
+      image: '/uploads/sample-product.jpeg',
+    });
+    Product.create({
+      userId: user.id,
+      category: 4,
+      title: '인기 매물 상품',
+      price: 1000,
+      image: '/uploads/sample-product.jpeg',
+    });
+    Product.create({
+      userId: user.id,
+      category: 0,
+      title: '2018년/1km/비흡연자',
+      price: 1000,
+      image: '/uploads/sample-product.jpeg',
+      filterdata: '2018/1/false',
+    });
+    Product.create({
+      userId: user.id,
+      category: 0,
+      title: '2019년/1km/흡연자',
+      price: 1000,
+      image: '/uploads/sample-product.jpeg',
+      filterdata: '2019/1/true',
+    });
+    Product.create({
+      userId: user.id,
+      category: 0,
+      title: '2019년/100km/비흡연자',
+      price: 1000,
+      image: '/uploads/sample-product.jpeg',
+      filterdata: '2019/100/false',
+    });
   } catch (e) {
     stopServer(server, sequelize);
     throw e;

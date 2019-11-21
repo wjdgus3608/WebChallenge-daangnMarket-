@@ -25,22 +25,19 @@ class ProductList extends Component<InjectedProps & RouteComponentProps> {
           <h5 className="container-headline">중고 거래 제품</h5>
 
           <div className="categories-group">
-            <Link
-              to={PAGE_PATHS.PRODUCT_CAR_CATEGORY_LISTS}
-              className="btn btn-category"
-            >
-              차량
+            <Link to={{pathname:PAGE_PATHS.PRODUCT_CAR_CATEGORY_LISTS, state:{title:"중고 차량 목록",category:0}}} className="btn btn-category">
+            차량
             </Link>
-            <Link to={PAGE_PATHS.PRODUCT_LISTS} className="btn btn-category">
+            <Link to={{pathname:PAGE_PATHS.PRODUCT_CAR_CATEGORY_LISTS, state:{title:"인기 매물 목록",category:4}}} className="btn btn-category">
               인기매물
             </Link>
-            <Link to={PAGE_PATHS.PRODUCT_LISTS} className="btn btn-category">
+            <Link to={{pathname:PAGE_PATHS.PRODUCT_CAR_CATEGORY_LISTS, state:{title:"중고 가구 / 인테리어 목록",category:1}}} className="btn btn-category">
               가구/인테리어
             </Link>
-            <Link to={PAGE_PATHS.PRODUCT_LISTS} className="btn btn-category">
+            <Link to={{pathname:PAGE_PATHS.PRODUCT_CAR_CATEGORY_LISTS, state:{title:"중고 유아동 / 유아도서 목록",category:2}}} className="btn btn-category">
               유아동/유아도서
             </Link>
-            <Link to={PAGE_PATHS.PRODUCT_LISTS} className="btn btn-category">
+            <Link to={{pathname:PAGE_PATHS.PRODUCT_CAR_CATEGORY_LISTS, state:{title:"중고 생활 / 가공식품 목록",category:3}}} className="btn btn-category">
               생활/가공식품
             </Link>
           </div>

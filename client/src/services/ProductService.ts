@@ -9,7 +9,7 @@ export type ProductRegistrationDto = {
   title: string;
   description: string;
   price: number;
-  filterData: any;
+  filterData?: any;
 }
 
 export type ProductDto = {
@@ -22,7 +22,7 @@ export type ProductDto = {
   price: number;
   createdAt: string;
   updatedAt: string;
-  filterData: any;
+  filterdata: any;
 }
 
 const API_HOST = process.env.API_HOST || 'http://localhost:5000/api';
@@ -36,6 +36,7 @@ class ProductService {
     if (this.authStore.auth == null) {
       throw new Error('need to login!');
     }
+    console.log('res body :',body.filterData)
     const formData = new FormData();
     formData.append('image', body.image);
     formData.append('userId', String(this.authStore.auth.id));
@@ -43,7 +44,9 @@ class ProductService {
     formData.append('title', body.title);
     formData.append('description', body.description);
     formData.append('price', String(body.price));
+    if(body.filterData!=undefined)
     formData.append('filterdata', String(body.filterData.carYear)+'/'+String(body.filterData.carMile)+'/'+String(body.filterData.isSmoke));
+    else formData.append('filterdata', '');
 
     return axios.post<ProductRegistrationDto, ApiResponse<ProductDto>>(`${API_HOST}/products`, formData, {
       headers: {'Content-Type': 'multipart/form-data' }
@@ -63,11 +66,11 @@ class ProductService {
   }
 
   async getByCategoryWithFilter(category: string, filterData:any): Promise<ApiResponse<ProductDto[]>> {
-    return axios.get(`${API_HOST}/products/category/${category}/filtered`,{params:{
+    return axios.post(`${API_HOST}/products/category/${category}/filtered`,{
         carYear:filterData.carYear,
         carMile:filterData.carMile,
         radioChecked:filterData.radioChecked
-      }});
+      });
   }
 
 }

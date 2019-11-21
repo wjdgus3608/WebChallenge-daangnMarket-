@@ -8,7 +8,6 @@ import { inject, observer } from 'mobx-react';
 import { getCategoryName } from '~pages/utils';
 import moment from 'moment';
 import 'moment/locale/ko';
-import DynamicDetail from "~pages/ProductDetail/dynamicDetail";
 
 type ProductDetailProps = {
   [STORES.PRODUCTS_STORE]: ProductsStore;
@@ -17,10 +16,11 @@ type ProductDetailProps = {
 function ProductDetail(props: ProductDetailProps) {
   useEffect(() => {
     props[STORES.PRODUCTS_STORE].getProduct(props.match.params.id);
+
   }, []);
 
   const { detailProduct } = props[STORES.PRODUCTS_STORE];
-  const { image, category, title, price, createdAt, description } = detailProduct;
+  const { image, category, title, price, createdAt, description, filterdata } = detailProduct;
   const time = moment(createdAt);
 
   return (
@@ -46,7 +46,17 @@ function ProductDetail(props: ProductDetailProps) {
               <time dateTime="2019-08-20T08:30:00Z">{time.fromNow()}</time>
             </span>
           </li>
-          <DynamicDetail category={category}/>
+          {category===0&&<div>
+          <li className="list-item car-model-year">
+            차량 연식 <span>{String(filterdata).split('/')[0]}년</span>
+          </li>
+          <li className="list-item car-mileage">
+            주행 거리 <span>{String(filterdata).split('/')[1]}km</span>
+          </li>
+          <li className="list-item car-smoking">
+            판매자 흡연 여부 <span>{String(filterdata).split('/')[2]==='true'?'흡연자':'비흡연자'}</span>
+          </li>
+        </div>}
         </ul>
         <div className="description">{description}</div>
       </div>

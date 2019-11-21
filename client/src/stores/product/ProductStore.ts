@@ -1,8 +1,7 @@
 import { action, observable } from 'mobx';
 import ProductService, { ProductDto, ProductRegistrationDto } from '~services/ProductService';
 import autobind from 'autobind-decorator';
-import {ApiResponse} from "~services/types";
-import axios from "axios";
+
 
 @autobind
 class ProductsStore {

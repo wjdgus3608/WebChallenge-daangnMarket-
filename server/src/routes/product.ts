@@ -1,6 +1,7 @@
 import * as express from 'express';
 import Product from '../models/Product';
 import * as multer from 'multer';
+import { Op } from 'sequelize';
 
 const upload = multer({ dest: 'uploads/' });
 
@@ -34,13 +35,29 @@ router.get('/category/:category', async (req, res) => {
   }
 });
 
-router.get('/category/:category/filtered', async (req, res) => {
+router.post('/category/:category/filtered', async (req, res) => {
   const mycategory = req.params.category;
-  const filterdata = req.query;
+  const filterdata = req.body
+  console.log(filterdata);
   try {
     const products = await Product.findAll({where: {category: Number(mycategory)}});
-
-    return res.json({ data: products });
+    const tmpdata: any = []
+    products.map((p) => {
+      if (p.filterdata !== null) {
+          const str = p.filterdata.split('/');
+          if (filterdata.carYear.val1 <= str[0] && filterdata.carYear.val2 >= str[0]) {
+            if (filterdata.carMile.val1 <= str[1] && filterdata.carMile.val2 >= str[1]) {
+              if (filterdata.radioChecked === undefined) {
+                tmpdata.push(p);
+              }
+              else if ((filterdata.radioChecked === 'option1' ? 'true' : 'false') === str[2]) {
+                tmpdata.push(p);
+              }
+            }
+          }
+      }
+    })
+    return res.json({ data: tmpdata });
   } catch (e) {
     return res.status(500).json({ msg: e.message });
   }
@@ -61,19 +78,5 @@ router.post('', upload.single('image'), async (req, res) => {
   }
 });
 
-router.post('/category/:category', upload.single('image'), async (req, res) => {
-  const image = req.file;
-  const product = req.body;
-
-  try {
-    const insertedProduct = await Product.create({
-      ...product,
-      image: `/${image.path}`,
-    });
-    return res.json({ data: insertedProduct, msg: '상품등록에 성공하였습니다.' });
-  } catch (e) {
-    return res.status(500).json({ msg: e.message });
-  }
-});
 
 export default router;

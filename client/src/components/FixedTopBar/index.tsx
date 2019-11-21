@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { PAGE_PATHS } from '~constants';
 // @ts-ignore
 import LogoImage from '~assets/logo-basic.svg';
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 function FixedTopBar(props:any) {
   const [selectedCategory,setCategory]=useState(props.category);
@@ -24,7 +24,7 @@ function FixedTopBar(props:any) {
             </button>
           </li>
           <li className="nav-item">
-            <Link to={PAGE_PATHS.PRODUCT_REGISTRATION}>
+            <Link to={{pathname:PAGE_PATHS.PRODUCT_REGISTRATION, state:{category:selectedCategory}}}>
               <i className="material-icons ic-create">create</i>
             </Link>
           </li>

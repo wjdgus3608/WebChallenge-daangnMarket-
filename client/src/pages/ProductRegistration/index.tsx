@@ -1,22 +1,22 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { STORES } from '~constants';
 import { inject, observer } from 'mobx-react';
-import {useHistory} from "react-router";
+import {useHistory, useLocation} from "react-router";
 import ProductsStore from '~stores/product/ProductStore';
 import BackTopBar from '~components/BackTopBar';
 import Footer from '~components/Footer';
 import DynamicForm from "~pages/ProductRegistration/dynamicForm";
 
 interface InjectedProps {
-  [STORES.PRODUCTS_STORE]: ProductsStore,
-  params:any
+  [STORES.PRODUCTS_STORE]: ProductsStore
 }
 
 const ProductRegistration = inject(STORES.PRODUCTS_STORE)(observer((props: InjectedProps) => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
-  const [category, setCategory] = useState();
+  const location = useLocation()
+  const [category, setCategory] = useState(location.state.category);
   const [fileName, setFileName] = useState('파일선택');
   const [image, setImage] = useState();
   const [filterData, setfilterData] = useState();
@@ -39,7 +39,6 @@ const ProductRegistration = inject(STORES.PRODUCTS_STORE)(observer((props: Injec
   const onRegister = async (event: FormEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log("onregister",filterData);
     await props.productsStore.registrationProduct({
       title,
       description,

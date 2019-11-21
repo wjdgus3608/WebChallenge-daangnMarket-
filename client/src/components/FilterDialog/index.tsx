@@ -18,8 +18,8 @@ function FilterDialog(props:any) {
     const handleInit=()=>{
         setCarYear({val1:2010,val2:2020});
         setCarMile({val1: 0,val2: 10000});
-        setRadioChecked('');
-        props.handleInit();
+        setRadioChecked(undefined);
+        props.handleInit(carYear,carMile,radioChecked);
     }
     const handleYearValue=(child_val:number[])=>{
         setCarYear({val1: child_val[0],val2: child_val[1]})
@@ -41,43 +41,47 @@ function FilterDialog(props:any) {
                  <div className="modal-dialog modal-filter" role="document">
                          <div className="modal-content">
                              <div className="modal-header">
-                                 <h4 className="modal-title">차량 조건 설정</h4>
+                                 <h4 className="modal-title">{props.category===0 && "차량" || props.category===1&& "가구 / 인테리어" ||
+                                 props.category===2&&"유아동 / 유아도서"|| props.category===3&&"생활 / 가공식품" || props.category===4&&"인기 매물"} 조건 설정</h4>
                                  <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={handleClose}>
                                      <i className="material-icons">clear</i>
                                  </button>
                              </div>
                              <div className="modal-body">
-                                 <div className="form-group filter-car-model-year">
-                                     <label className="" htmlFor="sliderCarModelYear">차량 연식 범위</label>
-                                     <RangeSlider min={2010} max={2020} step={1} values={carYear} handleValue={handleYearValue}/>
+                                 {props.category===0 && (<div>
+                                     <div className="form-group filter-car-model-year">
+                                         <label className="" htmlFor="sliderCarModelYear">차량 연식 범위</label>
+                                         <RangeSlider min={2010} max={2020} step={1} values={carYear} handleValue={handleYearValue}/>
                                          <small id="sliderCarModelYearHelp" className="text-muted">2010년부터
                                              2020년까지</small>
-                                 </div>
-
-                                 <div className="form-group filter-car-mileage">
-                                     <label htmlFor="sliderCarMileage">차량 주행 거리</label>
-                                     <RangeSlider min={0} max={10000} step={100} values={carMile} handleValue={handleMileValue}/>
-                                     <small id="sliderCarMileageHelp" className="text-muted">0km부터 10000km까지</small>
-                                 </div>
-
-                                 <div className="form-group filter-car-smoking">
-                                     <label>차량 판매자 흡연 여부</label>
-
-                                     <div className="form-check form-check-inline">
-                                         <input className="form-check-input" type="radio" name="formRadiosSmoking"
-                                                id="formRadiosSmoking_1" value="option1"  checked={radioChecked==="option1"} onChange={handleRadio}/>
-                                         <label className="form-check-label" htmlFor="formRadiosSmoking_1">
-                                             흡연
-                                         </label>
                                      </div>
-                                     <div className="form-check form-check-inline">
-                                         <input className="form-check-input" type="radio" name="formRadiosSmoking"
-                                                id="formRadiosSmoking_2" value="option2" checked={radioChecked==="option2"} onChange={handleRadio}/>
-                                         <label className="form-check-label" htmlFor="formRadiosSmoking_2">
-                                             비흡연
-                                         </label>
+
+                                     <div className="form-group filter-car-mileage">
+                                         <label htmlFor="sliderCarMileage">차량 주행 거리</label>
+                                         <RangeSlider min={0} max={10000} step={100} values={carMile} handleValue={handleMileValue}/>
+                                         <small id="sliderCarMileageHelp" className="text-muted">0km부터 10000km까지</small>
                                      </div>
-                                 </div>
+
+                                     <div className="form-group filter-car-smoking">
+                                         <label>차량 판매자 흡연 여부</label>
+
+                                         <div className="form-check form-check-inline">
+                                             <input className="form-check-input" type="radio" name="formRadiosSmoking"
+                                                    id="formRadiosSmoking_1" value="option1"  checked={radioChecked==="option1"} onChange={handleRadio}/>
+                                             <label className="form-check-label" htmlFor="formRadiosSmoking_1">
+                                                 흡연
+                                             </label>
+                                         </div>
+                                         <div className="form-check form-check-inline">
+                                             <input className="form-check-input" type="radio" name="formRadiosSmoking"
+                                                    id="formRadiosSmoking_2" value="option2" checked={radioChecked==="option2"} onChange={handleRadio}/>
+                                             <label className="form-check-label" htmlFor="formRadiosSmoking_2">
+                                                 비흡연
+                                             </label>
+                                         </div>
+                                     </div>
+                                 </div>)}
+
                              </div>
                              <div className="modal-footer">
                                  <button type="button" className="btn btn-secondary mr-auto" onClick={handleInit}>초기화</button>

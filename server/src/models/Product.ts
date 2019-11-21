@@ -8,7 +8,7 @@ export default class Product extends Model {
   public description!: string;
   public price!: number;
   public image!: string;
-
+  public filterdata!: string
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
