@@ -46,7 +46,7 @@ function ProductDetail(props: ProductDetailProps) {
               <time dateTime="2019-08-20T08:30:00Z">{time.fromNow()}</time>
             </span>
           </li>
-          {category===0&&<div>
+          {category===0&&<div id="car_detail">
           <li className="list-item car-model-year">
             차량 연식 <span>{String(filterdata).split('/')[0]}년</span>
           </li>

@@ -14,7 +14,12 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EIO: i/o error, scandir '/app'
+  SyntaxError: /app/package.json: Unexpected string in JSON at position 702
+      at JSON.parse (<anonymous>)
+      at /opt/yarn-v1.19.1/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/opt/yarn-v1.19.1/lib/cli.js:304:30)
+      at /opt/yarn-v1.19.1/lib/cli.js:315:13
 
 npm manifest: 
   {
@@ -34,6 +39,11 @@ npm manifest:
       "server:build": "yarn workspace server build",
       "server:test": "yarn workspace server test",
       "server:test:mocha": "yarn workspace server test:mocha"
+  "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
+    "test:unit:watch": "npm run test:unit -- --watch",
+    "test:snapshot": "jest --config ./test/jest.config.json",
+    "test:snapshot:watch": "npm run test:snapshot -- --watch",
+    "test:cypress": "cypress open"
     },
     "license": "MIT",
     "workspaces": [
@@ -42,7 +52,8 @@ npm manifest:
     ],
     "devDependencies": {
       "@material-ui/core": "^4.6.1",
-      "@typescript-eslint/eslint-plugin": "^2.6.1"
+      "@typescript-eslint/eslint-plugin": "^2.6.1",
+      "cypress": "^3.6.1"
     }
   }
 

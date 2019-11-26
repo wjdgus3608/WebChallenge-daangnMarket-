@@ -14,7 +14,7 @@ function CarForm(props:any) {
     }
     useEffect(sendData,[carYear,carMile,isSmoke]);
     return (
-        <div>
+        <div id="car_form">
         <div className="form-group form-car-model-year">
             <select id="carModelYear" className="form-control" required={true} onChange={v=>(setCarYear(Number(v.target.value)))}>
                 <option value="">차량 연식을 선택해주세요</option>

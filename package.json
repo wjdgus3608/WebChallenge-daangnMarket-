@@ -14,7 +14,12 @@
     "client:dev": "yarn workspace client dev",
     "server:build": "yarn workspace server build",
     "server:test": "yarn workspace server test",
-    "server:test:mocha": "yarn workspace server test:mocha"
+    "server:test:mocha": "yarn workspace server test:mocha",
+"test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
+  "test:unit:watch": "npm run test:unit -- --watch",
+  "test:snapshot": "jest --config ./test/jest.config.json",
+  "test:snapshot:watch": "npm run test:snapshot -- --watch",
+  "test:cypress": "cypress open"
   },
   "license": "MIT",
   "workspaces": [
@@ -23,6 +28,7 @@
   ],
   "devDependencies": {
     "@material-ui/core": "^4.6.1",
-    "@typescript-eslint/eslint-plugin": "^2.6.1"
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "cypress": "^3.6.1"
   }
 }

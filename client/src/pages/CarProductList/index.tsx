@@ -25,8 +25,8 @@ class CarProductList extends Component<InjectedProps & RouteComponentProps> {
   state={
     isDialogOpen:false,
     filterBtnState:false,
-    carYear:0,
-    carMile:0,
+    carYear:{val1:2010,val2:2020},
+    carMile:{val1:0,val2:10000},
     radioChecked:undefined
   }
   handleDialog=()=>{
@@ -42,7 +42,7 @@ class CarProductList extends Component<InjectedProps & RouteComponentProps> {
     this.setState({carYear: carYear});
     this.setState({carMile: carMile});
     this.setState({radioChecked: radioChecked});
-    this.setState({filterBtnState: true},()=>{
+    this.setState({filterBtnState: radioChecked===undefined&&carYear.val1===2010&&carYear.val2===2020&&carMile.val1===0&&carMile.val2===10000?false:true},()=>{
       this.updateProducts();
     });
   };
@@ -50,7 +50,6 @@ class CarProductList extends Component<InjectedProps & RouteComponentProps> {
     this.setState({carYear: carYear});
     this.setState({carMile: carMile});
     this.setState({radioChecked: radioChecked});
-    this.setState({filterBtnState:false});
   };
 
   updateProducts=()=>{
@@ -82,7 +81,7 @@ class CarProductList extends Component<InjectedProps & RouteComponentProps> {
                 </li>
             ))}
           </ul>
-          <FilterDialog open={this.state.isDialogOpen} close={this.handleDialog} category={this.category} handleSubmit={this.handleSubmit} handleInit={this.handleInit}/>
+          <FilterDialog open={this.state.isDialogOpen} close={this.handleDialog} category={this.category} handleSubmit={this.handleSubmit} handleInit={this.handleInit} loadData={this.state}/>
         </div>
         <Footer/>
         {this.state.isDialogOpen?ReactDOM.createPortal(<div className="modal-backdrop fade show"></div>,document.body)

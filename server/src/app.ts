@@ -109,6 +109,14 @@ async function runServer() {
       image: '/uploads/sample-product.jpeg',
       filterdata: '2019/100/false',
     });
+    Product.create({
+      userId: user.id,
+      category: 0,
+      title: '2014년/6000km/비흡연자',
+      price: 1000,
+      image: '/uploads/sample-product.jpeg',
+      filterdata: '2014/6000/false',
+    });
   } catch (e) {
     stopServer(server, sequelize);
     throw e;

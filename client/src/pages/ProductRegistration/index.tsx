@@ -71,7 +71,7 @@ const ProductRegistration = inject(STORES.PRODUCTS_STORE)(observer((props: Injec
                    onChange={v => setTitle(v.target.value)} required={true}/>
           </div>
           <div className="form-group form-category">
-            <select id="productsCategory" className="form-control" value={category} onChange={onCategoryChange}>
+            <select id="productsCategory" className="form-control" value={category} about={String(category)} onChange={onCategoryChange}>
               <option value={undefined}>카테고리를 선택해주세요.</option>
               <option value={0}>차량</option>
               <option value={1}>가구/인테리어</option>
