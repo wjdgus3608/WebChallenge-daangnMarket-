@@ -15,11 +15,11 @@
     "server:build": "yarn workspace server build",
     "server:test": "yarn workspace server test",
     "server:test:mocha": "yarn workspace server test:mocha",
-"test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
-  "test:unit:watch": "npm run test:unit -- --watch",
-  "test:snapshot": "jest --config ./test/jest.config.json",
-  "test:snapshot:watch": "npm run test:snapshot -- --watch",
-  "test:cypress": "cypress open"
+    "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
+    "test:unit:watch": "npm run test:unit -- --watch",
+    "test:snapshot": "jest --config ./test/jest.config.json",
+    "test:snapshot:watch": "npm run test:snapshot -- --watch",
+    "test:cypress": "cypress open"
   },
   "license": "MIT",
   "workspaces": [
